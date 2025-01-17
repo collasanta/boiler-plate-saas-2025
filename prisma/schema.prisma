@@ -1,0 +1,203 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Professional {
+  id                 String               @id @map("id")
+  name               String?
+  profession         String?
+  avgClientsSurvey   Int?
+  email              String?              @unique
+  whatsapp           String?              @unique
+  clients            Client[]
+  programs           Program[]
+  dietPlans          DietPlan[]
+  workoutPlans       WorkoutPlan[]
+  dietAutomations    DietAutomation[]
+  dietAutomationRuns DietAutomationRun[]
+  createdAt          DateTime             @default(now())
+  updatedAt          DateTime             @updatedAt
+
+  @@index([email])
+  @@index([whatsapp])
+}
+
+model Client {
+  id                       String                 @id @map("id")
+  name                     String
+  whatsapp                 String?                @unique
+  email                    String?                @unique
+  info                     String?                @default("")
+  genre                    String?
+  age                      Int?
+  currentDietPlanId        String?                @unique
+  currentDietPlan          DietPlan?              @relation("CurrentClientDiet", fields: [currentDietPlanId], references: [id])
+  currentWorkoutPlanId     String?                @unique
+  currentWorkoutPlan       WorkoutPlan?           @relation("CurrentClientWorkout", fields: [currentWorkoutPlanId], references: [id])
+  professional             Professional           @relation(fields: [professionalId], references: [id])
+  professionalId           String
+  programs                 Program[]
+  dietPlans                DietPlan[]             @relation("ClientDietPlans")
+  workoutPlans             WorkoutPlan[]          @relation("ClientWorkoutPlans")
+  notificationSubscription WebPushSubscriptions[]
+  dietAutomationRuns       DietAutomationRun[]
+  createdAt                DateTime               @default(now())
+  updatedAt                DateTime               @updatedAt
+
+  @@index([professionalId])
+  @@index([whatsapp])
+  @@index([email])
+}
+
+model Program {
+  id              String                 @id @map("id")
+  name            String
+  client          Client                 @relation(fields: [clientId], references: [id])
+  clientId        String
+  professional    Professional           @relation(fields: [professionalId], references: [id])
+  professionalId  String
+  start_date      DateTime
+  duration        Int
+  end_date        DateTime
+  enabled_metrics Json
+  daysActive      Int
+  daysPaid        Int
+  status          String
+  daily_data      DailyData[]
+  subscription    WebPushSubscriptions[]
+  createdAt       DateTime               @default(now())
+  updatedAt       DateTime               @updatedAt
+
+  @@index([clientId])
+  @@index([professionalId])
+}
+
+model DietPlan {
+  id                    String               @id @default(uuid())
+  name                  String
+  content               String               @db.Text
+  isTemplate            Boolean              @default(false)
+  professional          Professional         @relation(fields: [professionalId], references: [id])
+  professionalId        String
+  client                Client?              @relation("ClientDietPlans", fields: [clientId], references: [id])
+  clientId              String?
+  currentClient         Client?              @relation("CurrentClientDiet")
+  automationRuns        DietAutomationRun[]  @relation("TemplateDiet")
+  clonedAutomationRuns  DietAutomationRun[]  @relation("ClonedDiet")
+  createdAt             DateTime             @default(now())
+  updatedAt             DateTime             @updatedAt
+
+  @@index([professionalId])
+  @@index([clientId])
+}
+
+model WorkoutPlan {
+  id             String       @id @default(uuid())
+  name           String
+  content        String       @db.Text
+  isTemplate     Boolean      @default(false)
+  professional   Professional @relation(fields: [professionalId], references: [id])
+  professionalId String
+  client         Client?      @relation("ClientWorkoutPlans", fields: [clientId], references: [id])
+  clientId       String?
+  currentClient  Client?      @relation("CurrentClientWorkout")
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+
+  @@index([professionalId])
+  @@index([clientId])
+}
+
+model DailyData {
+  program      Program     @relation(fields: [programId], references: [id])
+  programId    String
+  date         DateTime
+  diet         Boolean?
+  exercise     Boolean?
+  weight       Decimal?
+  cardio       Int?
+  notes        String?
+  checkpointId String?
+  Checkpoint   Checkpoint? @relation(fields: [checkpointId], references: [id])
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+
+  @@id([programId, date])
+  @@index([programId])
+  @@index([checkpointId])
+}
+
+model Checkpoint {
+  id              String      @id @default(uuid())
+  formUrl         String?
+  programId       String
+  description     String
+  date            DateTime
+  dietPlanUrl     String?
+  trainingPlanUrl String?
+  formFilled      Boolean?
+  daily_data      DailyData[]
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+
+  @@index([programId])
+}
+
+model WebPushSubscriptions {
+  id                  String   @id @default(uuid())
+  subscription        Json
+  clientId            String
+  programId           String
+  device              String   @default("")
+  notificationsSent   Int      @default(0)
+  openedNotifications Int      @default(0)
+  client              Client   @relation(fields: [clientId], references: [id])
+  program             Program  @relation(fields: [programId], references: [id])
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  @@index([clientId])
+  @@index([programId])
+}
+
+model DietAutomation {
+  id             String               @id @default(uuid())
+  professional   Professional         @relation(fields: [professionalId], references: [id])
+  professionalId String
+  name           String
+  rule           String               @db.Text
+  runs           DietAutomationRun[]
+  createdAt      DateTime             @default(now())
+  updatedAt      DateTime             @updatedAt
+
+  @@index([professionalId])
+}
+
+model DietAutomationRun {
+  id                 String         @id @default(uuid())
+  automation         DietAutomation @relation(fields: [automationId], references: [id])
+  automationId       String
+  professional       Professional   @relation(fields: [professionalId], references: [id])
+  professionalId     String
+  receivedResponses  Json
+  client             Client?        @relation(fields: [clientId], references: [id])
+  clientId           String?
+  templateDiet       DietPlan?      @relation("TemplateDiet", fields: [dietId], references: [id])
+  dietId             String?
+  clientClonedDiet   DietPlan?      @relation("ClonedDiet", fields: [clientClonedDietId], references: [id])
+  clientClonedDietId String?        
+  createdAt          DateTime       @default(now())
+  updatedAt          DateTime       @updatedAt
+  calculatedCalories Int?           @default(0)
+
+  @@index([automationId])
+  @@index([professionalId])
+  @@index([clientId])
+  @@index([dietId])
+  @@index([clientClonedDietId])
+}
