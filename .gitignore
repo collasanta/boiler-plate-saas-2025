@@ -17,6 +17,7 @@
 
 # pwa
 **/public/workbox-*.js
+**/public/workbox-*.js.map
 **/public/sw.js
 **/public/worker-*.js
 
@@ -38,4 +39,5 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
 
