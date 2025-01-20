@@ -101,7 +101,7 @@ const JobApplicationCard = ({ diet, collapsed = true }: { diet: DietPlanWithClie
           {diet.client && (
             <div
               className="mt-4 flex items-center gap-2 cursor-pointer"
-              onClick={() => router.push(`/en/clients/${diet.client?.id}`)}
+              onClick={() => router.push(`/clients/${diet.client?.id}`)}
             >
               <UserIcon className="w-4 h-4 text-muted-foreground" />
               <span className="text-blue-700">{diet.client.name}</span>

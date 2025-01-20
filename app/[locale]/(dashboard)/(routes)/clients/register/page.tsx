@@ -53,7 +53,7 @@ export default function ClientRegistration() {
           toast.error(`Erro ao cadastrar cliente: ${result.error}`);
         } else {
           toast.success(`Cliente cadastrado com sucesso. ID: ${result.clientId}`);
-          router.push(`/en/clients/${result.clientId}`);
+          router.push(`/clients/${result.clientId}`);
         }
       } catch (error) {
         setIsLoading(false);

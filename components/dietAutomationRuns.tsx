@@ -88,7 +88,7 @@ export default function DietAutomationRuns({ runs }: DietAutomationRunsProps) {
                     <TableCell className="py-2">{new Date(run.createdAt).toLocaleString()}</TableCell>
                     <TableCell className="py-2">
                       <Link
-                        href={`/en/clients/${run.clientId}`}
+                        href={`/clients/${run.clientId}`}
                         className="flex items-center text-blue-600 hover:text-blue-800"
                         prefetch={index < 3}
                       >

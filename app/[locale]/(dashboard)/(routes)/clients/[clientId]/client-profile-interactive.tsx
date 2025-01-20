@@ -120,7 +120,7 @@ export default function ClientProfileInteractive({ initialClient, initialDietPla
                 </h3>
               </div>
               <div className="max-h-[100px] overflow-y-auto border rounded-md p-2">
-                <EditableClientInfo initialInfo={client.info || "{}"} clientId={client.id} />
+                {/* <EditableClientInfo initialInfo={client.info || "{}"} clientId={client.id} /> */}
               </div>
             </div>
           </div>

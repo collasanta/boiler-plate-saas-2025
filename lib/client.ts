@@ -4,7 +4,7 @@ import { auth } from "@clerk/nextjs/server"
 import prismadb from "./prismadb"
 import { generateId } from "./utils";
 import { revalidatePath } from "next/cache";
-import { ClientsFormSchemaType } from "@/types/en/clients";
+import { ClientsFormSchemaType } from "@/types/clients";
 
 export const checkClientByWhatsapp = async (clientWhatsapp: string) => {
     try {
@@ -31,7 +31,7 @@ export const checkClientByWhatsapp = async (clientWhatsapp: string) => {
 
 export async function createNewClient(clientData: ClientsFormSchemaType) {
     try {
-      const { userId } = auth()
+      const { userId } = await auth.protect()
       if (!userId) {
         return { error: "Usuário não autenticado" }
       }
@@ -48,7 +48,7 @@ export async function createNewClient(clientData: ClientsFormSchemaType) {
         },
       })
   
-      revalidatePath('/en/clients')
+      revalidatePath('/clients')
       return { clientId: newClient.id }
     } catch (error: any) {
       console.error("Error in createNewClient:", error)
@@ -57,7 +57,7 @@ export async function createNewClient(clientData: ClientsFormSchemaType) {
   }
 
 export const getClientsByProfessional = async () => {
-    const { userId } = auth()
+    const { userId } = await auth.protect()
     if (!userId) { return { error: "usuário não logado " } }
   
     try {
@@ -73,7 +73,7 @@ export const getClientsByProfessional = async () => {
 }
 
 export const getClient = async (clientId: string) => {
-    const { userId } = auth()
+    const { userId } = await auth.protect()
     if (!userId) { return { error: "usuário não logado " } }
 
     try {
@@ -112,7 +112,7 @@ export const getClient = async (clientId: string) => {
 
 export async function updateClientDiet(clientId: string, dietId: string) {
     try {
-      const { userId } = auth()
+      const { userId } = await auth.protect()
       if (!userId) {
         return { error: "Usuário não autenticado" }
         } 
@@ -153,8 +153,8 @@ export async function updateClientDiet(clientId: string, dietId: string) {
             updatedClient.currentDietPlan.name = `${updatedClient.currentDietPlan?.name} - ${updatedClient.name}`
         }
   
-        revalidatePath(`/en/clients/${clientId}`)
-        revalidatePath(`/en/clients`)
+        revalidatePath(`/clients/${clientId}`)
+        revalidatePath(`/clients`)
       return { success: true, client: updatedClient }
     } catch (error: any) {
       console.error("Error updating client diet:", error)
@@ -164,7 +164,7 @@ export async function updateClientDiet(clientId: string, dietId: string) {
   
 export async function deleteClient(clientId: string) {
   try {
-    const { userId } = auth();
+    const { userId } = await auth.protect();
     if (!userId) {
       return { status: "error", error: "Usuário não autenticado" };
     }
@@ -181,7 +181,7 @@ export async function deleteClient(clientId: string) {
       where: { id: clientId },
     });
 
-    revalidatePath('/en/clients');
+    revalidatePath('/clients');
     return { status: "deleted" };
   } catch (error: any) {
     console.error("Error in deleteClient:", error);
@@ -191,7 +191,7 @@ export async function deleteClient(clientId: string) {
 
 export async function updateClientInfo(clientId: string, info: string) {
   try {
-    const { userId } = auth();
+    const { userId } = await auth.protect();
     if (!userId) {
       return { error: "Unauthorized" };
     }
@@ -201,7 +201,7 @@ export async function updateClientInfo(clientId: string, info: string) {
       data: { info },
     });
       
-    revalidatePath(`/en/clients/${clientId}`);
+    revalidatePath(`/clients/${clientId}`);
     return { client: updatedClient };
   } catch (error) {
     console.error("Error updating client info:", error);

@@ -32,7 +32,7 @@ const DietAutomationCard: React.FC<AutomationCardProps> = ({ automation }) => {
   const router = useRouter();
 
   const handleClick = () => {
-    router.push(`/en/automations/${automation.id}`);
+    router.push(`/automations/${automation.id}`);
   };
 
   const handleDeleteAutomation = async (automationId: string) => {

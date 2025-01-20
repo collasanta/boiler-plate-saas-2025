@@ -1,5 +1,3 @@
-// app/en/clients/[clientId]/page.tsx
-
 import { getClient } from "@/lib/client";
 import { getDietPlansByProfessional } from "@/lib/diets";
 import ClientProfileInteractive from "./client-profile-interactive";

@@ -94,7 +94,7 @@ export async function updateDietContent(dietId: string, content: string) {
 
 export async function getDietPlansByProfessional(): Promise<GetDietPlansResult> {
   try {
-    const { userId } = auth();
+    const { userId } = await auth.protect();
     if (!userId) {
       return { error: "Usuário não autenticado" };
     }
@@ -150,7 +150,7 @@ export async function registerNewDiet(data: DietFormSchemaType) {
           currentDietPlanId: newDiet.id
         }
       })
-      revalidatePath(`/en/clients/${newDiet.clientId}`)
+      revalidatePath(`/clients/${newDiet.clientId}`)
     }
 
     revalidatePath('/diets')

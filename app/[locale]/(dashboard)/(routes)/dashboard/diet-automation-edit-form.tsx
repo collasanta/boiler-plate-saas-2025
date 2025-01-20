@@ -102,7 +102,7 @@ export default function DietAutomationEditForm({ initialAutomation, dietPlans }:
       }
 
       toast.success("Automação de dieta atualizada com sucesso!");
-      router.push("/en/automations");
+      router.push("/automations");
     } catch (error) {
       console.error("Erro ao atualizar automação de dieta:", error);
       toast.error("Falha ao atualizar automação de dieta: " + (error as Error).message);

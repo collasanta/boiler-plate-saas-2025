@@ -33,7 +33,7 @@ const ClientCard: React.FC<ClientCardProps> = ({ client }) => {
   const router = useRouter();
 
   const handleClick = () => {
-    router.push(`/en/clients/${client.id}`);
+    router.push(`/clients/${client.id}`);
   };
 
   const handleDeleteClient = async (clientId: string) => {
@@ -71,7 +71,7 @@ const ClientCard: React.FC<ClientCardProps> = ({ client }) => {
               size="sm"
               onClick={(e) => {
                 e.stopPropagation();
-                router.push(`/en/clients/${client.id}`);
+                router.push(`/clients/${client.id}`);
               }}
             >
               <PencilIcon className="w-4 h-4" />
