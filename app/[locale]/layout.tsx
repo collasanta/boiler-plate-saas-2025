@@ -12,6 +12,8 @@ import { Analytics } from "@vercel/analytics/react";
 import { ptBR, enUS } from "@clerk/localizations";
 import { Suspense } from "react";
 import Loading from "./loading";
+import { notFound } from "next/navigation";
+import { routing } from "@/i18n/routing";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -63,7 +65,7 @@ export const metadata: Metadata = {
       },
     ],
   },
-  themeColor: "#f1f5f9",
+  // themeColor: "#f1f5f9",
 };
 
 export default async function RootLayout({
@@ -73,6 +75,11 @@ export default async function RootLayout({
   children: React.ReactNode;
   params: { locale: string };
 }) {
+  // Ensure that the incoming `locale` is valid
+  if (!routing.locales.includes(locale as any)) {
+    notFound();
+  }
+
   const messages = await getMessages();
 
   const clerkLocale = locale === "pt" ? ptBR : enUS;

@@ -145,7 +145,7 @@ export const deleteProgram = async (programId: string) => {
       }
     })
 
-    revalidatePath(`/dashboard`)
+    revalidatePath(`/app/dashboard`)
     return { status: "deleted" }
   } catch (error: any) {
     return { error: error.message }

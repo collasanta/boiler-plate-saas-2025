@@ -2,7 +2,7 @@
 
 import { Montserrat } from "next/font/google";
 import Image from "next/image";
-import { Link, redirect } from "@/i18n/routing";
+import { Link } from "@/i18n/routing";
 import { useAuth } from "@clerk/nextjs";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -11,9 +11,6 @@ const font = Montserrat({ weight: "600", subsets: ["latin"] });
 
 export const LandingNavbar = () => {
   const { isSignedIn } = useAuth();
-  if (isSignedIn) {
-    redirect("/dashboard");
-  }
 
   return (
     <nav className="p-4 bg-white flex items-center justify-between">
@@ -31,7 +28,7 @@ export const LandingNavbar = () => {
         </h1>
       </Link>
       <div className="flex items-center gap-x-2">
-        <Link href={isSignedIn ? "/dashboard" : "/sign-in"}>
+        <Link href={isSignedIn ? "/app/dashboard" : "/sign-in"}>
           <Button variant="outline" className="rounded-full text-gray-500">
             Entrar
           </Button>

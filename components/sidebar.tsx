@@ -18,79 +18,26 @@ import {
 } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { Montserrat } from "next/font/google";
+
 const font = Montserrat({ weight: "600", subsets: ["latin"] });
 
 const routes = [
-  // {
-  //     label: "Diários",
-  //     icon: LayoutDashboard,
-  //     href: "/diarios",
-  //     color: "text-emerald-500"
-  // },
-  // {
-  //     label: "Cadastro Diários",
-  //     icon: FolderSearch,
-  //     href: "/cadastro-diarios",
-  //     color: "text-emerald-500"
-  // },
-  // {
-  //   label: "Treinos",
-  //   icon: Dumbbell,
-  //   href: "/workouts",
-  //   color: "text-emerald-500",
-  //   subitems: [
-  //     {
-  //       label: "Cadastrar",
-  //       icon: Plus,
-  //       href: "/workouts/register",
-  //       color: "text-emerald-500",
-  //     },
-  //   ],
-  // },
-  // {
-  //   label: "Jobs Applied",
-  //   icon: FileChartColumn,
-  //   href: "/diets",
-  //   color: "text-emerald-500",
-  //   // subitems: [
-  //   //   {
-  //   //     label: "Cadastrar",
-  //   //     icon: Plus,
-  //   //     href: "/diets/register",
-  //   //     color: "text-emerald-500",
-  //   //   },
-  //   // ],
-  // },
-  // {
-  //   label: "Programas",
-  //   icon: CalendarClock,
-  //   href: "/plans",
-  //   color: "text-emerald-500",
-  //   subitems: [
-  //     {
-  //       label: "Programas",
-  //       icon: Plus,
-  //       href: "/plans/register",
-  //       color: "text-emerald-500",
-  //     },
-  //   ],
-  // },
   {
     label: "Dashboard",
     icon: BotMessageSquare,
-    href: "/dashboard",
+    href: "/app/dashboard",
     color: "text-emerald-500",
   },
   {
     label: "Profiles",
     icon: Users,
-    href: "/clients",
+    href: "/app/clients",
     color: "text-emerald-500",
     subitems: [
       {
         label: "Add New",
         icon: UserRoundPlus,
-        href: "/clients/register",
+        href: "/app/clients/register",
         color: "text-emerald-500",
       },
     ],
@@ -98,7 +45,7 @@ const routes = [
   {
     label: "Settings",
     icon: Settings,
-    href: "/settings",
+    href: "/app/settings",
     color: "text-emerald-500",
   },
 ];
@@ -111,11 +58,21 @@ const Sidebar = ({
   setIsOpen?: any;
 }) => {
   const pathname = usePathname();
+
+  // Helper function to check if a route is active by matching after /app/
+  const isRouteActive = (routePath: string) => {
+    const appPathIndex = pathname.indexOf("/app/");
+    if (appPathIndex === -1) return false;
+
+    const currentAppPath = pathname.slice(appPathIndex);
+    return currentAppPath.startsWith(routePath);
+  };
+
   return (
     <>
       <div className="space-y-4 py-4 flex flex-col h-full bg-secondary text-white">
         <div className="px-3 py-2 flex-1">
-          <Link href="/dashboard" className="flex items-center mx-auto mb-10">
+          <Link href="/app/dashboard" className="flex items-center mx-auto mb-10">
             <div className="relative w-[80px] h-[80px] bg-white rounded-full">
               <Image src="/logo.png" fill alt="logo" className="rounded-lg shadow-lg" />
             </div>
@@ -135,22 +92,22 @@ const Sidebar = ({
                   href={route.href}
                   onClick={() => setIsOpen(false)}
                   className={cn(
-                    "text-sm group flex p-3 w-full justify-start font-medium cursor-pointer hover:bg-muted rounded-lg transition  hover:text-white hover:bg-emerald-500",
-                    pathname.includes(route.href.split("/")[1]) ? "text-white bg-emerald-500" : "text-gray-600"
+                    "text-sm group flex p-3 w-full justify-start font-medium cursor-pointer hover:bg-muted rounded-lg transition hover:text-white hover:bg-emerald-500",
+                    isRouteActive(route.href) ? "text-white bg-emerald-500" : "text-gray-600"
                   )}
                 >
                   <div className="flex items-center flex-1">
                     <route.icon
                       className={cn(
                         "w-5 h-5 mr-3",
-                        pathname.includes(route.href.split("/")[1]) ? "#ffffff" : route.color,
+                        isRouteActive(route.href) ? "text-white" : route.color,
                         "group-hover:text-white"
                       )}
                     />
                     {route.label}
                   </div>
                 </Link>
-                {pathname.includes(route.href.split("/")[1]) &&
+                {isRouteActive(route.href) &&
                   route.subitems &&
                   route.subitems.map((subitem) => (
                     <Link
@@ -159,12 +116,14 @@ const Sidebar = ({
                       key={subitem.href}
                       className={cn(
                         "text-sm group flex p-3 w-full justify-start font-medium cursor-pointer rounded-lg transition text-gray-600",
-                        pathname === subitem.href && " bg-emerald-100",
+                        isRouteActive(subitem.href) && "bg-emerald-100",
                         "w-[95%] ml-auto hover:bg-emerald-100"
                       )}
                     >
                       <div className="flex items-center flex-1">
-                        <subitem.icon className={cn("w-5 h-5 mr-3", pathname === subitem.href ? "#ffffff" : subitem.color)} />
+                        <subitem.icon
+                          className={cn("w-5 h-5 mr-3", isRouteActive(subitem.href) ? "text-emerald-500" : subitem.color)}
+                        />
                         {subitem.label}
                       </div>
                     </Link>

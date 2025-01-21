@@ -26,15 +26,11 @@ export const LandingHero = () => {
           </div>
         </div>
         <div className="text-sm md:text-xl font-medium text-zinc-400">
-          Acompanhe o resultados dos seus clientes diariamente de forma
-          automática
+          Acompanhe o resultados dos seus clientes diariamente de forma automática
         </div>
         <div>
-          <Link href={isSignedIn ? "/dashboard" : "/sign-up"}>
-            <Button
-              variant="premium"
-              className="md:text-lg p-4 md:p-6 rounded-full font-semibold"
-            >
+          <Link href={isSignedIn ? "/app/dashboard" : "/sign-up"}>
+            <Button variant="premium" className="md:text-lg p-4 md:p-6 rounded-full font-semibold">
               Entrar
             </Button>
           </Link>
