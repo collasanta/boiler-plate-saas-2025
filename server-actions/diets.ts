@@ -4,11 +4,11 @@ import { auth } from "@clerk/nextjs/server"
 import prismadb from "@/lib/prismadb"
 import { revalidatePath } from "next/cache"
 import { DietFormSchemaType, DietPlanWithClient, GetDietPlansResult } from "@/types/diets"
-import { generateId } from "./utils"
+import { generateId } from "../lib/utils"
 
 export async function getDietPlanById(id: string) {
   try {
-    const { userId } = auth();
+    const { userId } = await auth.protect();;
     if (!userId) {
       return { error: "Usuário não autenticado" };
     }
@@ -41,7 +41,7 @@ export async function getDietPlanById(id: string) {
 
 export async function deleteDiet(dietId: string) {
   try {
-    const { userId } = auth()
+    const { userId } = await auth.protect();
     if (!userId) {
       return { status: "error", error: "Usuário não autenticado" }
     }
@@ -68,7 +68,7 @@ export async function deleteDiet(dietId: string) {
 
 export async function updateDietContent(dietId: string, content: string) {
   try {
-    const { userId } = auth()
+    const { userId } = await auth.protect();
     if (!userId) {
       return { error: "Unauthorized" }
     }
@@ -127,7 +127,7 @@ export async function getDietPlansByProfessional(): Promise<GetDietPlansResult> 
 
 export async function registerNewDiet(data: DietFormSchemaType) {
   try {
-    const { userId } = auth()
+    const { userId } = await auth.protect();
     if (!userId) {
       return { error: "Usuário não autenticado" }
     }
@@ -150,7 +150,7 @@ export async function registerNewDiet(data: DietFormSchemaType) {
           currentDietPlanId: newDiet.id
         }
       })
-      revalidatePath(`/clients/${newDiet.clientId}`)
+      revalidatePath(`/app/clients/${newDiet.clientId}`)
     }
 
     revalidatePath('/diets')
@@ -165,7 +165,7 @@ export async function registerNewDiet(data: DietFormSchemaType) {
 
 export async function getClientWithCurrentDiet(clientId: string) {
   try {
-    const { userId } = auth();
+    const { userId } = await auth.protect();;
     if (!userId) {
       return { error: "Usuário não autenticado" };
     }

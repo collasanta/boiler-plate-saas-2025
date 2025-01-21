@@ -16,7 +16,7 @@ import {
 import { Card, CardContent } from "@/components/ui/card";
 import { toast } from "react-hot-toast";
 import { useRouter } from "next/navigation";
-import { deleteClient } from "@/lib/client";
+import { deleteClient } from "@/server-actions/client";
 
 interface ClientCardProps {
   client: {
@@ -33,7 +33,7 @@ const ClientCard: React.FC<ClientCardProps> = ({ client }) => {
   const router = useRouter();
 
   const handleClick = () => {
-    router.push(`/clients/${client.id}`);
+    router.push(`/app/clients/${client.id}`);
   };
 
   const handleDeleteClient = async (clientId: string) => {
@@ -71,7 +71,7 @@ const ClientCard: React.FC<ClientCardProps> = ({ client }) => {
               size="sm"
               onClick={(e) => {
                 e.stopPropagation();
-                router.push(`/clients/${client.id}`);
+                router.push(`/app/clients/${client.id}`);
               }}
             >
               <PencilIcon className="w-4 h-4" />

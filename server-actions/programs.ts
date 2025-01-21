@@ -1,14 +1,14 @@
 "use server"
 
 import { auth } from "@clerk/nextjs/server"
-import prismadb from "./prismadb"
-import { generateId } from "./utils"
+import prismadb from "../lib/prismadb"
+import { generateId } from "../lib/utils"
 import { programsFormSchema, programsFormSchemaType } from "@/types/programs"
 import { checkClientByWhatsapp, createNewClient } from "./client"
 import { revalidatePath } from "next/cache"
 
 export const getUserPrograms = async () => {
-  const { userId } = auth()
+  const { userId } = await auth.protect();
   if (!userId) { return { error: "usuário não logado " } }
 
   try {
@@ -67,7 +67,7 @@ export const getUserProgram = async (programId: string) => {
 
 export const registerNewProgram = async (finalForm: programsFormSchemaType) => {
   try {
-    let { userId } = auth()
+    let { userId } = await auth.protect();
     if (!userId) { return { error: "usuário não logado " } }
 
     const typeCheck = programsFormSchema.safeParse(finalForm)

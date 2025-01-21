@@ -1,8 +1,8 @@
 'use server'
 
 import { auth } from "@clerk/nextjs/server"
-import prismadb from "./prismadb"
-import { generateId } from "./utils";
+import prismadb from "../lib/prismadb"
+import { generateId } from "../lib/utils";
 import { revalidatePath } from "next/cache";
 import { ClientsFormSchemaType } from "@/types/clients";
 
@@ -48,7 +48,7 @@ export async function createNewClient(clientData: ClientsFormSchemaType) {
         },
       })
   
-      revalidatePath('/clients')
+      revalidatePath('/app/clients')
       return { clientId: newClient.id }
     } catch (error: any) {
       console.error("Error in createNewClient:", error)
@@ -153,8 +153,8 @@ export async function updateClientDiet(clientId: string, dietId: string) {
             updatedClient.currentDietPlan.name = `${updatedClient.currentDietPlan?.name} - ${updatedClient.name}`
         }
   
-        revalidatePath(`/clients/${clientId}`)
-        revalidatePath(`/clients`)
+        revalidatePath(`/app/clients/${clientId}`)
+        revalidatePath(`/app/clients`)
       return { success: true, client: updatedClient }
     } catch (error: any) {
       console.error("Error updating client diet:", error)
@@ -181,7 +181,7 @@ export async function deleteClient(clientId: string) {
       where: { id: clientId },
     });
 
-    revalidatePath('/clients');
+    revalidatePath('/app/clients');
     return { status: "deleted" };
   } catch (error: any) {
     console.error("Error in deleteClient:", error);
@@ -201,7 +201,7 @@ export async function updateClientInfo(clientId: string, info: string) {
       data: { info },
     });
       
-    revalidatePath(`/clients/${clientId}`);
+    revalidatePath(`/app/clients/${clientId}`);
     return { client: updatedClient };
   } catch (error) {
     console.error("Error updating client info:", error);

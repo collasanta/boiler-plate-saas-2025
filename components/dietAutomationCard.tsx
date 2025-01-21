@@ -16,7 +16,7 @@ import {
 import { Card, CardContent } from "@/components/ui/card";
 import { toast } from "react-hot-toast";
 import { useRouter } from "next/navigation";
-import { deleteAutomation } from "@/lib/automations";
+import { deleteAutomation } from "@/server-actions/automations";
 
 interface AutomationCardProps {
   automation: {

@@ -20,7 +20,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { updateClientDiet } from "@/lib/client";
+import { updateClientDiet } from "@/server-actions/client";
 import { Link } from "@/i18n/routing";
 import { ClientProfileInteractiveProps } from "@/types/diets";
 import EditableClientInfo from "@/components/block-editor-editable-client-info";

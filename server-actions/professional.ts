@@ -1,7 +1,7 @@
 'use server'
 
 import { auth, clerkClient } from "@clerk/nextjs/server"
-import prismadb from "./prismadb"
+import prismadb from "../lib/prismadb"
 import { professionalFormType } from "@/types/professionals"
 
 export const isNewUser = async () => {

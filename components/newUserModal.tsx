@@ -9,22 +9,12 @@ import {
   AlertDialogTitle,
 } from "./ui/alert-dialog";
 import { useState } from "react";
-import { createNewProfessional } from "@/lib/professional";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
+import { createNewProfessional } from "@/server-actions/professional";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  professionalFormSchema,
-  professionalFormType,
-} from "@/types/professionals";
+import { professionalFormSchema, professionalFormType } from "@/types/professionals";
 import { Button } from "@/components/ui/button";
 import toast from "react-hot-toast";
 
@@ -103,9 +93,7 @@ export const NewUserModal = () => {
                 render={({ field }) => (
                   <FormItem>
                     <div className="flex flex-row space-x-4">
-                      <FormLabel>
-                        Quantos pacientes você atende em média no mês?
-                      </FormLabel>
+                      <FormLabel>Quantos pacientes você atende em média no mês?</FormLabel>
                     </div>
                     <FormControl>
                       <Input placeholder="15" {...field} />

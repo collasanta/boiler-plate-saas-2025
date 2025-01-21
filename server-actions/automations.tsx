@@ -2,15 +2,12 @@
 
 import { auth } from "@clerk/nextjs/server";
 import { revalidatePath } from "next/cache";
-import prismadb from "./prismadb";
-import { generateId } from "./utils";
+import prismadb from "../lib/prismadb";
+import { generateId } from "../lib/utils";
 
-export async function registerDietAutomation(data: {
-  name: string;
-  rule: string;
-}) {
+export async function registerDietAutomation(data: { name: string; rule: string }) {
   try {
-    const { userId } = auth();
+    const { userId } = await auth.protect();
     if (!userId) {
       return { error: "Usuário não autenticado" };
     }
@@ -36,7 +33,7 @@ export async function registerDietAutomation(data: {
 
 export async function getDietAutomationsByProfessional() {
   try {
-    const { userId } = auth();
+    const { userId } = await auth.protect();
     if (!userId) {
       return { error: "Usuário não autenticado" };
     }
@@ -59,7 +56,7 @@ export async function getDietAutomationsByProfessional() {
 
 export async function deleteAutomation(id: string) {
   try {
-    const { userId } = auth();
+    const { userId } = await auth.protect();
     if (!userId) {
       throw new Error("Usuário não autenticado");
     }
@@ -80,7 +77,7 @@ export async function deleteAutomation(id: string) {
 
 export async function getAutomationById(id: string) {
   try {
-    const { userId } = auth();
+    const { userId } = await auth.protect();
     if (!userId) {
       return { error: "Usuário não autenticado" };
     }
@@ -103,12 +100,9 @@ export async function getAutomationById(id: string) {
   }
 }
 
-export async function updateAutomation(
-  id: string,
-  data: { name: string; rule: string }
-) {
+export async function updateAutomation(id: string, data: { name: string; rule: string }) {
   try {
-    const { userId } = auth();
+    const { userId } = await auth.protect();
     if (!userId) {
       throw new Error("Usuário não autenticado");
     }
@@ -135,7 +129,7 @@ export async function updateAutomation(
 
 export async function getAutomationRuns(automationId: string) {
   try {
-    const { userId } = auth();
+    const { userId } = await auth.protect();
     if (!userId) {
       return { error: "Unauthorized" };
     }
@@ -179,10 +173,7 @@ export async function getAutomationRuns(automationId: string) {
       templateDietName: run.templateDiet?.name ?? "Deleted Diet",
       clientClonedDietId: run.clientClonedDiet?.id ?? null,
       clientClonedDietName: run.clientClonedDiet?.name ?? "Deleted Diet",
-      receivedResponses:
-        typeof run.receivedResponses === "string"
-          ? JSON.parse(run.receivedResponses)
-          : run.receivedResponses,
+      receivedResponses: typeof run.receivedResponses === "string" ? JSON.parse(run.receivedResponses) : run.receivedResponses,
     }));
 
     return { runs: formattedRuns };

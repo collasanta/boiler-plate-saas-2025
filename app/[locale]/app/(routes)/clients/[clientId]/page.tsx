@@ -1,5 +1,5 @@
-import { getClient } from "@/lib/client";
-import { getDietPlansByProfessional } from "@/lib/diets";
+import { getClient } from "@/server-actions/client";
+import { getDietPlansByProfessional } from "@/server-actions/diets";
 import ClientProfileInteractive from "./client-profile-interactive";
 import { GetClientResult } from "@/types/clients";
 import { GetDietPlansResult } from "@/types/diets";

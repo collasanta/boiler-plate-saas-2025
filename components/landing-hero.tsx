@@ -5,7 +5,6 @@ import { Link } from "@/i18n/routing";
 import { useAuth } from "@clerk/nextjs";
 
 import { Button } from "@/components/ui/button";
-import Image from "next/image";
 
 export const LandingHero = () => {
   const { isSignedIn } = useAuth();

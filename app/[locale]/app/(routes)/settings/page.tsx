@@ -1,4 +1,4 @@
-import { getProfessionalInfos } from "@/lib/professional";
+import { getProfessionalInfos } from "@/server-actions/professional";
 
 const SettingsPage = async () => {
   const professionalInfos = await getProfessionalInfos();

@@ -16,9 +16,8 @@ import {
 import { Card, CardContent } from "@/components/ui/card";
 import toast from "react-hot-toast";
 import { DietPlanType, DietPlanWithClient } from "@/types/diets";
-import ViewOnlyEditor from "./block-editor-view-only";
 import { useRouter } from "next/navigation";
-import { deleteDiet } from "@/lib/diets";
+import { deleteDiet } from "@/server-actions/diets";
 
 const JobApplicationCard = ({ diet, collapsed = true }: { diet: DietPlanWithClient; collapsed?: boolean }) => {
   const [isOpen, setIsOpen] = useState(!collapsed);
@@ -101,7 +100,7 @@ const JobApplicationCard = ({ diet, collapsed = true }: { diet: DietPlanWithClie
           {diet.client && (
             <div
               className="mt-4 flex items-center gap-2 cursor-pointer"
-              onClick={() => router.push(`/clients/${diet.client?.id}`)}
+              onClick={() => router.push(`/app/clients/${diet.client?.id}`)}
             >
               <UserIcon className="w-4 h-4 text-muted-foreground" />
               <span className="text-blue-700">{diet.client.name}</span>
@@ -114,9 +113,7 @@ const JobApplicationCard = ({ diet, collapsed = true }: { diet: DietPlanWithClie
                 <InfoIcon className="w-4 h-4 text-muted-foreground" />
                 <span className="font-medium">Conteúdo da Dieta</span>
               </div>
-              <div className="bg-muted p-2 rounded-md">
-                <ViewOnlyEditor content={diet.content} />
-              </div>
+              <div className="bg-muted p-2 rounded-md">editor</div>
             </div>
           </div>
         </div>

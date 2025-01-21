@@ -9,7 +9,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { createNewClient } from "@/lib/client";
+import { createNewClient } from "@/server-actions/client";
 import toast from "react-hot-toast";
 
 const clientFormSchema = z.object({
@@ -53,7 +53,7 @@ export default function ClientRegistration() {
           toast.error(`Erro ao cadastrar cliente: ${result.error}`);
         } else {
           toast.success(`Cliente cadastrado com sucesso. ID: ${result.clientId}`);
-          router.push(`/clients/${result.clientId}`);
+          router.push(`/app/clients/${result.clientId}`);
         }
       } catch (error) {
         setIsLoading(false);

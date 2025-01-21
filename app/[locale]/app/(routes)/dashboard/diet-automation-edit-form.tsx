@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { PlusIcon, SaveIcon, SearchIcon, Trash2Icon } from "lucide-react";
-import { updateAutomation } from "@/lib/automations";
+import { updateAutomation } from "@/server-actions/automations";
 
 interface DietPlan {
   id: string;

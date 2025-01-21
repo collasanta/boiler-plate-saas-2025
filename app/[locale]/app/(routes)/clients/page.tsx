@@ -1,7 +1,7 @@
 import { PlusIcon } from "lucide-react";
 import toast from "react-hot-toast";
 import { Link } from "@/i18n/routing";
-import { getClientsByProfessional } from "@/lib/client";
+import { getClientsByProfessional } from "@/server-actions/client";
 import ClientCard from "@/components/clientCard.";
 import { Button } from "@/components/ui/button";
 
@@ -20,7 +20,7 @@ const ClientsPage = async () => {
         <p className="text-muted-foreground font-light text-small md:text-lg text-center">Acompanhe seus Clientes</p>
       </div>
       <div className="px-4 flex justify-center md:px-20 lg:px-32 space-y-4 items-center">
-        <Link href="/clients/register">
+        <Link href="/app/clients/register">
           <Button className="p-4 flex shadow-md">
             <PlusIcon className="w-6 h-6 pr-2" />
             Register New Profile
