@@ -1,11 +1,11 @@
 "use client";
 
-import React, { useState } from "react";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Button } from "@/components/ui/button";
-import { ChevronDown, ChevronUp, ExternalLink } from "lucide-react";
 import { Link } from "@/i18n/routing";
+import { ChevronDown, ChevronUp, ExternalLink } from "lucide-react";
+import React, { useState } from "react";
 
 type FormattedRun = {
   id: string;
@@ -32,7 +32,6 @@ export default function DietAutomationRuns({ runs }: DietAutomationRunsProps) {
 
   const formatReceivedResponses = (responses: string) => {
     try {
-      console.log({ responses });
       const parsed = typeof responses === "string" ? JSON.parse(responses) : responses;
       return (
         <div className="grid grid-cols-2 gap-4">

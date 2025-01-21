@@ -1,4 +1,3 @@
-import React from "react";
 import DietAutomationRuns from "@/components/dietAutomationRuns";
 
 export default async function Dashboard() {
@@ -270,7 +269,6 @@ export default async function Dashboard() {
     },
   ];
 
-  console.log(runs);
   return (
     <div>
       <div className="mb-8 space-y-4">

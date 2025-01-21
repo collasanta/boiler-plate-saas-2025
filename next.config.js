@@ -7,7 +7,7 @@ const withPWA = require("@ducanh2912/next-pwa").default({
   workboxOptions: {
     skipWaiting: true,
   },
-  // buildExcludes: [/\/_next\/static\/.*\.js/],
+  // buildExcludes: [/\/_next\/static\/.*\.js/],s
   // reloadOnOnline: true,
 });
 

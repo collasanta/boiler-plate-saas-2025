@@ -1,10 +1,19 @@
-import { getProfessionalInfos } from "@/server-actions/professional";
-
 const SettingsPage = async () => {
-  const professionalInfos = await getProfessionalInfos();
-  if (professionalInfos === null) {
-    return <div className="text-center">Erro ao carregar informações</div>;
-  }
+  // const professionalInfos = await getProfessionalInfos();
+  // if (professionalInfos === null) {
+  //   return <div className="text-center">Erro ao carregar informações</div>;
+  // }
+
+  const professionalInfos = {
+    id: "user_2rkkmWBunGoUejrbYtMAvxVXHPH",
+    name: "Teste inicial",
+    profession: "papito",
+    avgClientsSurvey: 23,
+    email: "hirella.ai@gmail.com",
+    whatsapp: "+12312321312",
+    createdAt: "2025-01-17T10:44:06.406Z",
+    updatedAt: "2025-01-17T10:44:06.406Z",
+  };
 
   return (
     <div>
