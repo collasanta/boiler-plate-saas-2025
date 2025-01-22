@@ -25,7 +25,8 @@ export default function ClientRegistration() {
       router.push(`/app/clients/${data?.clientId}`);
     },
     onError({ error }) {
-      toast.error(`Erro ao cadastrar cliente`);
+      console.log("Error in createNewClient2:", error);
+      toast.error(`Erro ao cadastrar cliente ${error.serverError}`);
     },
   });
 
@@ -43,9 +44,12 @@ export default function ClientRegistration() {
     },
   });
 
-  const handleSubmit2 = async (data: ClientsFormSchemaType) => {
-    executeSave(data);
+  const handleSubmit2 = (e: React.FormEvent) => {
+    e.preventDefault();
+    const formData = form.getValues();
+    executeSave(formData);
   };
+
   // const handleSubmit = async (e: React.FormEvent) => {
   //   e.preventDefault();
   //   const isValid = await form.trigger();
@@ -76,7 +80,7 @@ export default function ClientRegistration() {
       <h2 className="text-2xl md:text-4xl font-bold text-center mb-4">Cadastro de Cliente</h2>
       <p className="text-muted-foreground font-light text-small md:text-lg text-center">Cadastre novos clientes</p>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(handleSubmit2)} className="space-y-6 mt-10">
+        <form onSubmit={handleSubmit2} className="space-y-6 mt-10">
           <FormField
             control={form.control}
             name="clientName"

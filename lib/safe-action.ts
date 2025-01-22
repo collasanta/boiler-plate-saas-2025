@@ -1,7 +1,7 @@
 import { redirect } from "@/i18n/routing";
 import { auth } from "@clerk/nextjs/server";
 import { getLocale } from "next-intl/server";
-import { createSafeActionClient } from "next-safe-action";
+import { createMiddleware, createSafeActionClient } from "next-safe-action";
 import { z } from "zod";
 
 export const publicActionClient = createSafeActionClient({
@@ -18,9 +18,10 @@ export const publicActionClient = createSafeActionClient({
       return "Database error";
     }
   },
+  throwValidationErrors: true,
 });
 
-export const authActionClient = publicActionClient.use(async ({ next }) => {
+const checkUserLoggedInMiddleware = createMiddleware().define(async ({ next }) => {
   const { userId } = await auth.protect();
 
   if (!userId) {
@@ -32,3 +33,26 @@ export const authActionClient = publicActionClient.use(async ({ next }) => {
   // Return the next middleware with `userId` value in the context
   return next({ ctx: { userId } });
 });
+
+const loggingMiddleware = createMiddleware().define(async ({ next, clientInput, metadata }) => {
+  console.log(`----------LOGGING MIDDLEWARE START: ${metadata.actionName}----------------`);
+  console.log("Client input ->", clientInput);
+
+  const startTime = performance.now();
+
+  // Here we await the action execution.
+  const result = await next();
+
+  const endTime = performance.now();
+
+  console.log("Result ->", result);
+  console.log("Action execution took", (endTime - startTime).toString().split(".")[0], "s");
+  console.log(`----------LOGGING MIDDLEWARE FINISH: ${metadata.actionName}----------------`);
+
+  // And then return the result of the awaited action.
+  return result;
+});
+
+export const authActionClient = publicActionClient
+  .use(loggingMiddleware) // ONLY IN DEV
+  .use(checkUserLoggedInMiddleware);

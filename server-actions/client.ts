@@ -1,6 +1,5 @@
 "use server";
 
-import { redirect } from "@/i18n/routing";
 import { authActionClient } from "@/lib/safe-action";
 import { clientsFormSchema, ClientsFormSchemaType } from "@/types/clients";
 import { auth } from "@clerk/nextjs/server";
@@ -14,12 +13,8 @@ export const createNewClient2 = authActionClient
   .schema(clientsFormSchema, {
     handleValidationErrorsShape: async (ve) => flattenValidationErrors(ve).fieldErrors,
   })
-  .action(async ({ parsedInput: client }: { parsedInput: ClientsFormSchemaType }) => {
-    const { userId } = await auth.protect();
-    if (!userId) {
-      redirect("/sign-in");
-    }
-
+  .action(async ({ parsedInput: client, ctx: { userId } }) => {
+    console.log("Creating new client in action");
     const newClient = await prismadb.client.create({
       data: {
         id: generateId(),
