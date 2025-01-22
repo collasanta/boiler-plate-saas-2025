@@ -1,6 +1,28 @@
 {
   "Homepage": {
     "title": "Bem-vindo ao nosso site",
-    "description": "Este é o nosso site, aproveite a sua estadia!"
+    "description": "Este é o nosso site, aproveite a sua estadia!",
+    "mainTitle": "Fazendo da saúde",
+    "typewriter": {
+      "habit": "Um hábito",
+      "lifestyle": "Um estilo de vida",
+      "routine": "Uma rotina"
+    },
+    "subtitle": "Acompanhe o resultados dos seus clientes diariamente de forma automática",
+    "cta": "Entrar",
+    "bottomText": "Se diferencie e Garanta melhores resultados para seus pacientes",
+    "landingContent": {
+      "title": "Feito para:",
+      "testimonials": {
+        "nutritionists": {
+          "name": "Nutricionistas",
+          "description": "Acompanhe o progresso dos seus pacientes de perto, diariamente, e de forma única. E automatize o envio de anameneses e feedbacks"
+        },
+        "patients": {
+          "name": "Pacientes",
+          "description": "Relate diariamente sua evolução, e receba feedbacks do seu profissional de saúde de forma mais acertiva e personalizada"
+        }
+      }
+    }
   }
 }

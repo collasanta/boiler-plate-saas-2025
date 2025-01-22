@@ -1,6 +1,28 @@
 {
   "Homepage": {
     "title": "Welcome to our site",
-    "description": "This is our site, enjoy your stay!"
+    "description": "This is our site, enjoy your stay!",
+    "mainTitle": "Making health",
+    "typewriter": {
+      "habit": "A habit",
+      "lifestyle": "A lifestyle",
+      "routine": "A routine"
+    },
+    "subtitle": "Track your clients' results daily automatically",
+    "cta": "Enter",
+    "bottomText": "Stand out and ensure better results for your patients",
+    "landingContent": {
+      "title": "Made for:",
+      "testimonials": {
+        "nutritionists": {
+          "name": "Nutritionists",
+          "description": "Monitor your patients' progress closely, daily, and in a unique way. And automate the sending of anamnesis and feedback"
+        },
+        "patients": {
+          "name": "Patients",
+          "description": "Report your evolution daily, and receive feedback from your healthcare professional in a more assertive and personalized way"
+        }
+      }
+    }
   }
 }
