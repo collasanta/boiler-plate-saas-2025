@@ -1,8 +1,5 @@
 "use client";
 
-import React, { useState } from "react";
-import { Trash2Icon, PencilIcon, UserIcon } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -13,10 +10,13 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { toast } from "react-hot-toast";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/i18n/routing";
 import { deleteClient } from "@/server-actions/client";
+import { PencilIcon, Trash2Icon, UserIcon } from "lucide-react";
+import React, { useState } from "react";
+import { toast } from "react-hot-toast";
 
 interface ClientCardProps {
   client: {

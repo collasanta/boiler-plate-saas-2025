@@ -4,11 +4,11 @@ import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { useRouter } from "@/i18n/routing";
 import { createNewClient2 } from "@/server-actions/client";
 import { clientsFormSchema, ClientsFormSchemaType } from "@/types/clients";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useAction } from "next-safe-action/hooks";
-import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
@@ -16,9 +16,9 @@ export default function ClientRegistration() {
   // next safe action pattern
   const {
     execute: executeSave,
-    result: saveResult,
     isPending: isSaving,
-    reset: resetSaveAction,
+    // result: saveResult,
+    // reset: resetSaveAction,
   } = useAction(createNewClient2, {
     onSuccess({ data }) {
       toast.success(`Cliente cadastrado com sucesso. ID: ${data?.clientId}`);

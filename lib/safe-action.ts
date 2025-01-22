@@ -4,7 +4,7 @@ import { getLocale } from "next-intl/server";
 import { createSafeActionClient } from "next-safe-action";
 import { z } from "zod";
 
-export const actionClient = createSafeActionClient({
+export const publicActionClient = createSafeActionClient({
   defineMetadataSchema() {
     return z.object({
       actionName: z.string(),
@@ -20,7 +20,7 @@ export const actionClient = createSafeActionClient({
   },
 });
 
-export const authActionClient = actionClient.use(async ({ next }) => {
+export const authActionClient = publicActionClient.use(async ({ next }) => {
   const { userId } = await auth.protect();
 
   if (!userId) {

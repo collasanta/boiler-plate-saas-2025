@@ -1,8 +1,5 @@
 "use client";
 
-import React, { useState } from "react";
-import { Trash2Icon, PencilIcon, ZapIcon } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -13,10 +10,13 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { toast } from "react-hot-toast";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/i18n/routing";
 import { deleteAutomation } from "@/server-actions/automations";
+import { PencilIcon, Trash2Icon, ZapIcon } from "lucide-react";
+import React, { useState } from "react";
+import { toast } from "react-hot-toast";
 
 interface AutomationCardProps {
   automation: {

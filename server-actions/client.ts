@@ -1,7 +1,7 @@
 "use server";
 
 import { redirect } from "@/i18n/routing";
-import { actionClient } from "@/lib/safe-action";
+import { authActionClient } from "@/lib/safe-action";
 import { clientsFormSchema, ClientsFormSchemaType } from "@/types/clients";
 import { auth } from "@clerk/nextjs/server";
 import { flattenValidationErrors } from "next-safe-action";
@@ -9,7 +9,7 @@ import { revalidatePath } from "next/cache";
 import prismadb from "../lib/prismadb";
 import { generateId } from "../lib/utils";
 
-export const createNewClient2 = actionClient
+export const createNewClient2 = authActionClient
   .metadata({ actionName: "createNewClient2" })
   .schema(clientsFormSchema, {
     handleValidationErrorsShape: async (ve) => flattenValidationErrors(ve).fieldErrors,

@@ -1,8 +1,5 @@
 "use client";
 
-import React, { useState, useRef, useEffect } from "react";
-import { ChevronDownIcon, ChevronUpIcon, Trash2Icon, PencilIcon, UserIcon, UtensilsIcon, InfoIcon } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -13,11 +10,14 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import toast from "react-hot-toast";
-import { DietPlanType, DietPlanWithClient } from "@/types/diets";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/i18n/routing";
 import { deleteDiet } from "@/server-actions/diets";
+import { DietPlanWithClient } from "@/types/diets";
+import { ChevronDownIcon, ChevronUpIcon, InfoIcon, PencilIcon, Trash2Icon, UserIcon, UtensilsIcon } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import toast from "react-hot-toast";
 
 const JobApplicationCard = ({ diet, collapsed = true }: { diet: DietPlanWithClient; collapsed?: boolean }) => {
   const [isOpen, setIsOpen] = useState(!collapsed);
