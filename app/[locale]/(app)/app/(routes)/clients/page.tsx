@@ -1,9 +1,9 @@
-import { PlusIcon } from "lucide-react";
-import toast from "react-hot-toast";
-import { Link } from "@/i18n/routing";
-import { getClientsByProfessional } from "@/server-actions/client";
 import ClientCard from "@/components/clientCard.";
 import { Button } from "@/components/ui/button";
+import { Link } from "@/i18n/routing";
+import { getClientsByProfessional } from "@/server-actions/client";
+import { PlusIcon } from "lucide-react";
+import toast from "react-hot-toast";
 
 const ClientsPage = async () => {
   const userClients = await getClientsByProfessional();

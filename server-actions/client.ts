@@ -1,10 +1,41 @@
 "use server";
 
-import { ClientsFormSchemaType } from "@/types/clients";
+import { redirect } from "@/i18n/routing";
+import { actionClient } from "@/lib/safe-action";
+import { clientsFormSchema, ClientsFormSchemaType } from "@/types/clients";
 import { auth } from "@clerk/nextjs/server";
+import { flattenValidationErrors } from "next-safe-action";
 import { revalidatePath } from "next/cache";
 import prismadb from "../lib/prismadb";
 import { generateId } from "../lib/utils";
+
+export const createNewClient2 = actionClient
+  .metadata({ actionName: "createNewClient2" })
+  .schema(clientsFormSchema, {
+    handleValidationErrorsShape: async (ve) => flattenValidationErrors(ve).fieldErrors,
+  })
+  .action(async ({ parsedInput: client }: { parsedInput: ClientsFormSchemaType }) => {
+    const { userId } = await auth.protect();
+    if (!userId) {
+      redirect("/sign-in");
+    }
+
+    const newClient = await prismadb.client.create({
+      data: {
+        id: generateId(),
+        name: client.clientName,
+        whatsapp: client.clientWhatsapp,
+        email: client.clientEmail,
+        genre: client.clientSex,
+        age: client.clientAge,
+        professionalId: userId,
+      },
+    });
+
+    revalidatePath("/app/clients");
+    return { clientId: newClient.id };
+    // unique function
+  });
 
 export async function createNewClient(clientData: ClientsFormSchemaType) {
   try {

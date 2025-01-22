@@ -1,34 +1,38 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/navigation";
-import * as z from "zod";
+import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { createNewClient } from "@/server-actions/client";
+import { createNewClient2 } from "@/server-actions/client";
+import { clientsFormSchema, ClientsFormSchemaType } from "@/types/clients";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useAction } from "next-safe-action/hooks";
+import { useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
-const clientFormSchema = z.object({
-  clientName: z.string().min(1, "Nome do cliente é obrigatório"),
-  clientWhatsapp: z.string().min(1, "WhatsApp do cliente é obrigatório"),
-  clientEmail: z.string().email("Email inválido"),
-  clientSex: z.enum(["masculino", "feminino"]),
-  clientAge: z.number().min(1, "Idade deve ser maior que 0"),
-  currentDietPlanId: z.string().nullable().optional(),
-});
-
-type ClientFormSchemaType = z.infer<typeof clientFormSchema>;
-
 export default function ClientRegistration() {
-  const [isLoading, setIsLoading] = useState(false);
+  // next safe action pattern
+  const {
+    execute: executeSave,
+    result: saveResult,
+    isPending: isSaving,
+    reset: resetSaveAction,
+  } = useAction(createNewClient2, {
+    onSuccess({ data }) {
+      toast.success(`Cliente cadastrado com sucesso. ID: ${data?.clientId}`);
+      router.push(`/app/clients/${data?.clientId}`);
+    },
+    onError({ error }) {
+      toast.error(`Erro ao cadastrar cliente`);
+    },
+  });
+
   const router = useRouter();
 
-  const form = useForm<ClientFormSchemaType>({
-    resolver: zodResolver(clientFormSchema),
+  const form = useForm<ClientsFormSchemaType>({
+    resolver: zodResolver(clientsFormSchema),
     defaultValues: {
       clientName: "",
       clientWhatsapp: "",
@@ -39,37 +43,40 @@ export default function ClientRegistration() {
     },
   });
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const isValid = await form.trigger();
-    if (isValid) {
-      const data = form.getValues();
-      setIsLoading(true);
-
-      try {
-        const result = await createNewClient(data);
-        setIsLoading(false);
-        if ("error" in result) {
-          toast.error(`Erro ao cadastrar cliente: ${result.error}`);
-        } else {
-          toast.success(`Cliente cadastrado com sucesso. ID: ${result.clientId}`);
-          router.push(`/app/clients/${result.clientId}`);
-        }
-      } catch (error) {
-        setIsLoading(false);
-        toast.error("Erro ao cadastrar cliente. Tente novamente.");
-      }
-    } else {
-      toast.error(`Formulário inválido: ${JSON.stringify(form.formState.errors)}`);
-    }
+  const handleSubmit2 = async (data: ClientsFormSchemaType) => {
+    executeSave(data);
   };
+  // const handleSubmit = async (e: React.FormEvent) => {
+  //   e.preventDefault();
+  //   const isValid = await form.trigger();
+  //   if (isValid) {
+  //     const data = form.getValues();
+  //     setIsLoading(true);
+
+  //     try {
+  //       const result = await createNewClient(data);
+  //       setIsLoading(false);
+  //       if ("error" in result) {
+  //         toast.error(`Erro ao cadastrar cliente: ${result.error}`);
+  //       } else {
+  //         toast.success(`Cliente cadastrado com sucesso. ID: ${result.clientId}`);
+  //         router.push(`/app/clients/${result.clientId}`);
+  //       }
+  //     } catch (error) {
+  //       setIsLoading(false);
+  //       toast.error("Erro ao cadastrar cliente. Tente novamente.");
+  //     }
+  //   } else {
+  //     toast.error(`Formulário inválido: ${JSON.stringify(form.formState.errors)}`);
+  //   }
+  // };
 
   return (
     <div className="px-4 md:px-20 lg:px-32 md:max-w-[800px] mx-auto">
       <h2 className="text-2xl md:text-4xl font-bold text-center mb-4">Cadastro de Cliente</h2>
       <p className="text-muted-foreground font-light text-small md:text-lg text-center">Cadastre novos clientes</p>
       <Form {...form}>
-        <form onSubmit={handleSubmit} className="space-y-6 mt-10">
+        <form onSubmit={form.handleSubmit(handleSubmit2)} className="space-y-6 mt-10">
           <FormField
             control={form.control}
             name="clientName"
@@ -150,8 +157,8 @@ export default function ClientRegistration() {
 
           <div className="flex justify-center pt-6">
             <div className="flex-col flex space-y-2">
-              <Button type="submit" disabled={isLoading}>
-                {isLoading ? "Cadastrando..." : "Cadastrar Cliente"}
+              <Button type="submit" disabled={isSaving}>
+                {isSaving ? "Cadastrando..." : "Cadastrar Cliente"}
               </Button>
               <Button variant="outline" type="button" onClick={() => router.back()}>
                 Voltar
