@@ -8,23 +8,24 @@ import { useRouter } from "@/i18n/routing";
 import { createNewClient2 } from "@/server-actions/client";
 import { clientsFormSchema, ClientsFormSchemaType } from "@/types/clients";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useTranslations } from "next-intl";
 import { useAction } from "next-safe-action/hooks";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
 export default function ClientRegistration() {
-  // next safe action pattern
+  const t = useTranslations("Clients.registration");
+  const router = useRouter();
+
   const { execute: executeSave, isPending: isSaving } = useAction(createNewClient2, {
     onSuccess({ data }) {
-      toast.success(`Cliente cadastrado com sucesso. ID: ${data?.clientId}`);
+      toast.success(t("success") + data?.clientId);
       router.push(`/app/clients/${data?.clientId}`);
     },
     onError({ error }) {
-      toast.error(`Erro ao cadastrar cliente ${error.serverError}`);
+      toast.error(t("error") + error.serverError);
     },
   });
-
-  const router = useRouter();
 
   const form = useForm<ClientsFormSchemaType>({
     resolver: zodResolver(clientsFormSchema),
@@ -46,8 +47,8 @@ export default function ClientRegistration() {
 
   return (
     <div className="px-4 md:px-20 lg:px-32 md:max-w-[800px] mx-auto">
-      <h2 className="text-2xl md:text-4xl font-bold text-center mb-4">Cadastro de Cliente</h2>
-      <p className="text-muted-foreground font-light text-small md:text-lg text-center">Cadastre novos clientes</p>
+      <h2 className="text-2xl md:text-4xl font-bold text-center mb-4">{t("title")}</h2>
+      <p className="text-muted-foreground font-light text-small md:text-lg text-center">{t("subtitle")}</p>
       <Form {...form}>
         <form onSubmit={handleSubmit2} className="space-y-6 mt-10">
           <FormField
@@ -55,9 +56,9 @@ export default function ClientRegistration() {
             name="clientName"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Nome Completo</FormLabel>
+                <FormLabel>{t("form.fullName")}</FormLabel>
                 <FormControl>
-                  <Input placeholder="João Oliveira" {...field} />
+                  <Input placeholder={t("form.fullNamePlaceholder")} {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -69,9 +70,9 @@ export default function ClientRegistration() {
             name="clientWhatsapp"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Whatsapp do Cliente</FormLabel>
+                <FormLabel>{t("form.whatsapp")}</FormLabel>
                 <FormControl>
-                  <Input placeholder="+551199123456" {...field} />
+                  <Input placeholder={t("form.whatsappPlaceholder")} {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -83,9 +84,9 @@ export default function ClientRegistration() {
             name="clientEmail"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>E-mail do Cliente</FormLabel>
+                <FormLabel>{t("form.email")}</FormLabel>
                 <FormControl>
-                  <Input type="email" placeholder="cliente@exemplo.com" {...field} />
+                  <Input type="email" placeholder={t("form.emailPlaceholder")} {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -97,16 +98,16 @@ export default function ClientRegistration() {
             name="clientSex"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Sexo</FormLabel>
+                <FormLabel>{t("form.gender")}</FormLabel>
                 <Select onValueChange={field.onChange} defaultValue={field.value}>
                   <FormControl>
                     <SelectTrigger>
-                      <SelectValue placeholder="Selecione o sexo" />
+                      <SelectValue placeholder={t("form.genderPlaceholder")} />
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem value="masculino">Masculino</SelectItem>
-                    <SelectItem value="feminino">Feminino</SelectItem>
+                    <SelectItem value="masculino">{t("form.male")}</SelectItem>
+                    <SelectItem value="feminino">{t("form.female")}</SelectItem>
                   </SelectContent>
                 </Select>
                 <FormMessage />
@@ -119,9 +120,14 @@ export default function ClientRegistration() {
             name="clientAge"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Idade</FormLabel>
+                <FormLabel>{t("form.age")}</FormLabel>
                 <FormControl>
-                  <Input type="number" placeholder="25" {...field} onChange={(e) => field.onChange(e.target.valueAsNumber)} />
+                  <Input
+                    type="number"
+                    placeholder={t("form.agePlaceholder")}
+                    {...field}
+                    onChange={(e) => field.onChange(e.target.valueAsNumber)}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -131,10 +137,10 @@ export default function ClientRegistration() {
           <div className="flex justify-center pt-6">
             <div className="flex-col flex space-y-2">
               <Button type="submit" disabled={isSaving}>
-                {isSaving ? "Cadastrando..." : "Cadastrar Cliente"}
+                {isSaving ? t("form.submitting") : t("form.submit")}
               </Button>
               <Button variant="outline" type="button" onClick={() => router.back()}>
-                Voltar
+                {t("form.back")}
               </Button>
             </div>
           </div>

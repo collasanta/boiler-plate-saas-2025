@@ -4,7 +4,7 @@
     "description": "This is our site, enjoy your stay!",
     "mainTitle": "Making health",
     "typewriter": {
-      "habit": "A habit",
+      "habit": "A habit", 
       "lifestyle": "A lifestyle",
       "routine": "A routine"
     },
@@ -24,5 +24,56 @@
         }
       }
     }
-  }
-}
+  },
+  "Settings": {
+    "title": "Settings",
+    "description": "Adjust your preferences",
+    "profile": {
+      "name": "Name:",
+      "profession": "Profession:",
+      "email": "Email:",
+      "whatsapp": "WhatsApp:"
+    }
+  },
+  "Clients": {
+    "title": "Profiles",
+    "subtitle": "Track your Clients",
+    "register": "Register New Profile",
+    "registration": {
+      "title": "Client Registration", 
+      "subtitle": "Register new clients",
+      "form": {
+        "fullName": "Full Name",
+        "fullNamePlaceholder": "John Smith",
+        "whatsapp": "Client's WhatsApp",
+        "whatsappPlaceholder": "+551199123456",
+        "email": "Client's Email",
+        "emailPlaceholder": "client@example.com",
+        "gender": "Gender",
+        "genderPlaceholder": "Select gender",
+        "male": "Male",
+        "female": "Female", 
+        "age": "Age",
+        "agePlaceholder": "25",
+        "submit": "Register Client",
+        "submitting": "Registering...",
+        "back": "Back"
+      },
+      "success": "Client successfully registered. ID: ",
+      "error": "Error registering client ",
+      "loadError": "Error loading programs: "
+    }
+  },
+  "Dashboard": {
+    "title": "Dashboard",
+    "subtitle": "Track your applications"
+  },
+    "Sidebar": {
+      "dashboard": "Dashboard",
+      "profiles": {
+        "main": "Profiles",
+        "addNew": "Add New"
+      },
+      "settings": "Settings"
+    }
+ }

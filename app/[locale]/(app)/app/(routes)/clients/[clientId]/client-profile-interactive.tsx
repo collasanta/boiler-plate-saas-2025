@@ -7,18 +7,19 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Link } from "@/i18n/routing";
 import { ClientProfileInteractiveProps } from "@/types/diets";
 import { CalendarIcon, FileBadge, InfoIcon, LockIcon, MailIcon, PencilIcon, PhoneIcon, RefreshCwIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 export default function ClientProfileInteractive({ initialClient }: ClientProfileInteractiveProps) {
+  const t = useTranslations("ClientProfile");
   const [client, setClient] = useState(initialClient);
-
   const [currentDiet, setCurrentDiet] = useState(initialClient.currentDietPlan);
   const [isChangingDiet, setIsChangingDiet] = useState(false);
 
   return (
     <div className="container mx-auto py-10">
-      <h1 className="text-3xl font-bold text-center mb-2">Perfil do Cliente</h1>
-      <p className="text-muted-foreground text-center mb-8">Informações detalhadas do cliente</p>
+      <h1 className="text-3xl font-bold text-center mb-2">{t("title")}</h1>
+      <p className="text-muted-foreground text-center mb-8">{t("subtitle")}</p>
 
       <Card className="max-w-2xl mx-auto mb-6">
         <CardHeader className="flex flex-row items-center gap-4">
@@ -27,7 +28,9 @@ export default function ClientProfileInteractive({ initialClient }: ClientProfil
           </Avatar>
           <div>
             <CardTitle className="text-2xl mb-1">{client.name}</CardTitle>
-            <CardDescription>Cliente desde {new Date(client.createdAt).toLocaleDateString("pt-BR")}</CardDescription>
+            <CardDescription>
+              {t("memberSince")} {new Date(client.createdAt).toLocaleDateString("pt-BR")}
+            </CardDescription>
           </div>
         </CardHeader>
         <CardContent>
@@ -43,7 +46,7 @@ export default function ClientProfileInteractive({ initialClient }: ClientProfil
             <div className="flex items-center gap-2">
               <CalendarIcon className="text-muted-foreground" />
               <span>
-                Atualizado em: {new Date(client.updatedAt).toLocaleDateString("pt-BR")} às{" "}
+                {t("updatedAt")}: {new Date(client.updatedAt).toLocaleDateString("pt-BR")} {t("at")}{" "}
                 {new Date(client.updatedAt).toLocaleTimeString("pt-BR", {
                   hour: "2-digit",
                   minute: "2-digit",
@@ -51,16 +54,15 @@ export default function ClientProfileInteractive({ initialClient }: ClientProfil
               </span>
             </div>
             <div className="flex items-center gap-2">
-              <Badge variant="outline">{client.genre || "Gênero não especificado"}</Badge>
-              <Badge variant="outline">{client.age ? `${client.age} anos` : "Idade não especificada"}</Badge>
+              <Badge variant="outline">{client.genre || t("gender")}</Badge>
+              <Badge variant="outline">{client.age ? `${client.age} ${t("age")}` : t("notSpecified")}</Badge>
             </div>
 
-            {/* Informações Adicionais section */}
             <div className="mt-6">
               <div className="flex justify-between items-center mb-2">
                 <h3 className="text-lg font-semibold flex items-center gap-2">
                   <InfoIcon className="w-5 h-5" />
-                  Context
+                  {t("additionalInfo.context")}
                 </h3>
               </div>
               <div className="max-h-[100px] overflow-y-auto border rounded-md p-2">
@@ -74,22 +76,22 @@ export default function ClientProfileInteractive({ initialClient }: ClientProfil
       <Card className="max-w-2xl mx-auto">
         <CardHeader>
           <CardTitle className="text-2xl mb-1 flex items-center gap-2">
-            <FileBadge className="w-6 h-6" /> Resume
+            <FileBadge className="w-6 h-6" /> {t("additionalInfo.currentResume")}
           </CardTitle>
-          <CardDescription>Manage Profile Resume</CardDescription>
+          <CardDescription>{t("additionalInfo.manage")}</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="grid gap-6">
             <div>
-              <h3 className="font-semibold mb-2">Current Resume</h3>
+              <h3 className="font-semibold mb-2">{t("additionalInfo.currentResume")}</h3>
               <div className="flex items-center gap-2 p-2 border rounded-md bg-gray-50">
                 <LockIcon className="text-muted-foreground" />
-                <span className="flex-grow">{currentDiet ? currentDiet.name : "No Resume attached to this profile"}</span>
+                <span className="flex-grow">{currentDiet ? currentDiet.name : t("additionalInfo.noResume")}</span>
                 {currentDiet && (
                   <Link href={`/diets/${currentDiet.id}?editing=true`}>
                     <Button variant="outline" size="sm">
                       <PencilIcon className="w-4 h-4 mr-2" />
-                      Editar
+                      {t("additionalInfo.edit")}
                     </Button>
                   </Link>
                 )}
@@ -98,7 +100,7 @@ export default function ClientProfileInteractive({ initialClient }: ClientProfil
             <div className="flex gap-2">
               <Button onClick={() => setIsChangingDiet(!isChangingDiet)} className="flex-1" variant="outline">
                 <RefreshCwIcon className="w-4 h-4 mr-2" />
-                Change Current Resume
+                {t("additionalInfo.change")}
               </Button>
             </div>
           </div>

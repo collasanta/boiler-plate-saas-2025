@@ -5,7 +5,7 @@
     "mainTitle": "Fazendo da saúde",
     "typewriter": {
       "habit": "Um hábito",
-      "lifestyle": "Um estilo de vida",
+      "lifestyle": "Um estilo de vida", 
       "routine": "Uma rotina"
     },
     "subtitle": "Acompanhe o resultados dos seus clientes diariamente de forma automática",
@@ -19,10 +19,61 @@
           "description": "Acompanhe o progresso dos seus pacientes de perto, diariamente, e de forma única. E automatize o envio de anameneses e feedbacks"
         },
         "patients": {
-          "name": "Pacientes",
+          "name": "Pacientes", 
           "description": "Relate diariamente sua evolução, e receba feedbacks do seu profissional de saúde de forma mais acertiva e personalizada"
         }
       }
     }
+  },
+  "Settings": {
+    "title": "Configurações",
+    "description": "Ajuste suas preferências", 
+    "profile": {
+      "name": "Nome:",
+      "profession": "Profissão:",
+      "email": "Email:",
+      "whatsapp": "WhatsApp:"
+    }
+  },
+  "Clients": {
+    "title": "Perfis",
+    "subtitle": "Acompanhe seus Clientes",
+    "register": "Cadastrar Novo Perfil",
+    "registration": {
+      "title": "Cadastro de Cliente",
+      "subtitle": "Cadastre novos clientes",
+      "form": {
+        "fullName": "Nome Completo",
+        "fullNamePlaceholder": "João Oliveira",
+        "whatsapp": "Whatsapp do Cliente", 
+        "whatsappPlaceholder": "+551199123456",
+        "email": "E-mail do Cliente",
+        "emailPlaceholder": "cliente@exemplo.com",
+        "gender": "Sexo",
+        "genderPlaceholder": "Selecione o sexo",
+        "male": "Masculino",
+        "female": "Feminino",
+        "age": "Idade",
+        "agePlaceholder": "25",
+        "submit": "Cadastrar Cliente",
+        "submitting": "Cadastrando...",
+        "back": "Voltar"
+      },
+      "success": "Cliente cadastrado com sucesso. ID: ",
+      "error": "Erro ao cadastrar cliente "
+    },
+    "loadError": "Erro ao carregar programas: "
+  },
+  "Dashboard": {
+    "title": "Dashboard",
+    "subtitle": "Acompanhe suas aplicações"
+  },
+  "Sidebar": {
+    "dashboard": "Painel",
+    "profiles": {
+      "main": "Perfis",
+      "addNew": "Adicionar Novo"
+    }, 
+    "settings": "Configurações"
   }
-}
+ }

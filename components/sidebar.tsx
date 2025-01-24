@@ -1,54 +1,13 @@
 "use client";
 import { Link } from "@/i18n/routing";
-import Image from "next/image";
 import { cn } from "@/lib/utils";
-import {
-  Users,
-  LayoutDashboard,
-  FolderSearch,
-  Settings,
-  Dumbbell,
-  UtensilsCrossed,
-  UserRoundPlus,
-  BotMessageSquare,
-  SquarePlus,
-  Plus,
-  CalendarClock,
-  FileChartColumn,
-} from "lucide-react";
-import { usePathname } from "next/navigation";
+import { BotMessageSquare, Settings, UserRoundPlus, Users } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { Montserrat } from "next/font/google";
+import Image from "next/image";
+import { usePathname } from "next/navigation";
 
 const font = Montserrat({ weight: "600", subsets: ["latin"] });
-
-const routes = [
-  {
-    label: "Dashboard",
-    icon: BotMessageSquare,
-    href: "/app/dashboard",
-    color: "text-emerald-500",
-  },
-  {
-    label: "Profiles",
-    icon: Users,
-    href: "/app/clients",
-    color: "text-emerald-500",
-    subitems: [
-      {
-        label: "Add New",
-        icon: UserRoundPlus,
-        href: "/app/clients/register",
-        color: "text-emerald-500",
-      },
-    ],
-  },
-  {
-    label: "Settings",
-    icon: Settings,
-    href: "/app/settings",
-    color: "text-emerald-500",
-  },
-];
 
 const Sidebar = ({
   setIsOpen = () => {
@@ -58,7 +17,7 @@ const Sidebar = ({
   setIsOpen?: any;
 }) => {
   const pathname = usePathname();
-
+  const t = useTranslations("Sidebar");
   // Helper function to check if a route is active by matching after /app/
   const isRouteActive = (routePath: string) => {
     const appPathIndex = pathname.indexOf("/app/");
@@ -68,6 +27,34 @@ const Sidebar = ({
     return currentAppPath.startsWith(routePath);
   };
 
+  const routes = [
+    {
+      label: t("dashboard"),
+      icon: BotMessageSquare,
+      href: "/app/dashboard",
+      color: "text-emerald-500",
+    },
+    {
+      label: t("profiles.main"),
+      icon: Users,
+      href: "/app/clients",
+      color: "text-emerald-500",
+      subitems: [
+        {
+          label: t("profiles.addNew"),
+          icon: UserRoundPlus,
+          href: "/app/clients/register",
+          color: "text-emerald-500",
+        },
+      ],
+    },
+    {
+      label: t("settings"),
+      icon: Settings,
+      href: "/app/settings",
+      color: "text-emerald-500",
+    },
+  ];
   return (
     <>
       <div className="space-y-4 py-4 flex flex-col h-full bg-secondary text-white">

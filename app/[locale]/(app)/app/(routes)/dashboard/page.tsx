@@ -1,6 +1,8 @@
 import DietAutomationRuns from "@/components/dietAutomationRuns";
+import { getTranslations } from "next-intl/server";
 
 export default async function Dashboard() {
+  const t = await getTranslations("Dashboard");
   // Server action to retrieve runs goes here
   const runs = [
     {
@@ -266,8 +268,8 @@ export default async function Dashboard() {
   return (
     <div>
       <div className="mb-8 space-y-4">
-        <h2 className="text-2xl md:text-4xl font-bold text-center">Dashboard</h2>
-        <p className="text-muted-foreground font-light text-small md:text-lg text-center">Track your applications</p>
+        <h2 className="text-2xl md:text-4xl font-bold text-center mb-4">{t("title")}</h2>
+        <p className="text-muted-foreground font-light text-small md:text-lg text-center">{t("subtitle")}</p>
       </div>
       <div className="max-w-[90%] mx-auto">
         <DietAutomationRuns runs={runs} />
