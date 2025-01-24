@@ -13,8 +13,9 @@ import {
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useRouter } from "@/i18n/routing";
-import { deleteClient } from "@/server-actions/client";
+import { deleteClient2 } from "@/server-actions/client";
 import { PencilIcon, Trash2Icon, UserIcon } from "lucide-react";
+import { useAction } from "next-safe-action/hooks";
 import React, { useState } from "react";
 import { toast } from "react-hot-toast";
 
@@ -29,31 +30,20 @@ interface ClientCardProps {
 
 const ClientCard: React.FC<ClientCardProps> = ({ client }) => {
   const [confirmDelete, setConfirmDelete] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
   const handleClick = () => {
     router.push(`/app/clients/${client.id}`);
   };
 
-  const handleDeleteClient = async (clientId: string) => {
-    setIsLoading(true);
-    try {
-      const deleteCli = await deleteClient(clientId);
-      if (deleteCli.error) {
-        throw new Error(deleteCli.error);
-      }
-      setIsLoading(false);
-      setConfirmDelete(false);
+  const { execute: deleteClient, isPending } = useAction(deleteClient2, {
+    onSuccess() {
       toast.success("Cliente deletado com sucesso");
-      router.refresh();
-    } catch (error: any) {
-      console.error("Error in handleDeleteClient:", error);
-      setIsLoading(false);
-      setConfirmDelete(false);
-      toast.error("Erro ao deletar cliente: " + error.message);
-    }
-  };
+    },
+    onError({ error }) {
+      toast.error("Erro ao deletar cliente: " + error.serverError);
+    },
+  });
 
   return (
     <Card className="w-full max-w-[550px] mx-auto hover:shadow-lg transition">
@@ -121,7 +111,7 @@ const ClientCard: React.FC<ClientCardProps> = ({ client }) => {
             </AlertDialogHeader>
             <AlertDialogFooter>
               <AlertDialogCancel onClick={() => setConfirmDelete(false)}>Voltar</AlertDialogCancel>
-              {isLoading ? (
+              {isPending ? (
                 <AlertDialogAction className="mx-auto min-w-[90px] bg-red-600 hover:bg-red-800">
                   <svg
                     aria-hidden="true"
@@ -142,7 +132,8 @@ const ClientCard: React.FC<ClientCardProps> = ({ client }) => {
                   <span className="sr-only">Loading...</span>
                 </AlertDialogAction>
               ) : (
-                <AlertDialogAction className="bg-red-600 hover:bg-red-800" onClick={() => handleDeleteClient(client?.id || "")}>
+                <AlertDialogAction className="bg-red-600 hover:bg-red-800" onClick={() => deleteClient(client?.id || "")}>
+                  {/* <AlertDialogAction className="bg-red-600 hover:bg-red-800" onClick={() => handleDeleteClient(client?.id || "")}> */}
                   Deletar
                 </AlertDialogAction>
               )}
