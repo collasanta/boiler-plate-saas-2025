@@ -1,17 +1,15 @@
 import ClientCard from "@/components/clientCard.";
 import { Button } from "@/components/ui/button";
 import { Link } from "@/i18n/routing";
-import { getClientsByProfessional } from "@/server-actions/client";
+import { getClientsByProfessional2 } from "@/server-actions/client";
 import { PlusIcon } from "lucide-react";
 import toast from "react-hot-toast";
 
 const ClientsPage = async () => {
-  const userClients = await getClientsByProfessional();
-
-  if ("error" in userClients) {
-    toast.error("Erro ao carregar programas: " + userClients.error);
-    return null;
-  }
+  // const userClients = await getClientsByProfessional();
+  const userClients = await getClientsByProfessional2();
+  if (!userClients?.data || userClients.serverError)
+    return toast.error("Erro ao carregar programas: " + userClients?.serverError);
 
   return (
     <div className="pb-[100px]">
@@ -29,7 +27,7 @@ const ClientsPage = async () => {
       </div>
       <div className="px-4 md:px-20 lg:px-32 space-y-4 pt-8 mx-auto flex flex-col justify-center md:min-w-[400px]">
         {userClients &&
-          userClients?.map((client) => (
+          userClients?.data.map((client) => (
             <ClientCard key={client.id} client={client} />
             // <ProgramCard
             //   key={program.id}

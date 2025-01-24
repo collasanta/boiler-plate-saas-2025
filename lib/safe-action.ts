@@ -18,6 +18,7 @@ export const publicActionClient = createSafeActionClient({
       return "Database error";
     }
   },
+  defaultValidationErrorsShape: "flattened",
   throwValidationErrors: true,
 });
 

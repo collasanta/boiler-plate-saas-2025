@@ -32,6 +32,15 @@ export const createNewClient2 = authActionClient
     // unique function
   });
 
+export const getClientsByProfessional2 = authActionClient
+  .metadata({ actionName: "getClientsByProfessional2" })
+  .action(async ({ ctx: { userId } }) => {
+    const clients = await prismadb.client.findMany({
+      where: { professionalId: userId },
+    });
+    return clients;
+  });
+
 export async function createNewClient(clientData: ClientsFormSchemaType) {
   try {
     const { userId } = await auth.protect();
