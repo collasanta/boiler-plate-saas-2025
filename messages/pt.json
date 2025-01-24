@@ -5,7 +5,7 @@
     "mainTitle": "Fazendo da saúde",
     "typewriter": {
       "habit": "Um hábito",
-      "lifestyle": "Um estilo de vida", 
+      "lifestyle": "Um estilo de vida",
       "routine": "Uma rotina"
     },
     "subtitle": "Acompanhe o resultados dos seus clientes diariamente de forma automática",
@@ -19,7 +19,7 @@
           "description": "Acompanhe o progresso dos seus pacientes de perto, diariamente, e de forma única. E automatize o envio de anameneses e feedbacks"
         },
         "patients": {
-          "name": "Pacientes", 
+          "name": "Pacientes",
           "description": "Relate diariamente sua evolução, e receba feedbacks do seu profissional de saúde de forma mais acertiva e personalizada"
         }
       }
@@ -27,7 +27,7 @@
   },
   "Settings": {
     "title": "Configurações",
-    "description": "Ajuste suas preferências", 
+    "description": "Ajuste suas preferências",
     "profile": {
       "name": "Nome:",
       "profession": "Profissão:",
@@ -45,7 +45,7 @@
       "form": {
         "fullName": "Nome Completo",
         "fullNamePlaceholder": "João Oliveira",
-        "whatsapp": "Whatsapp do Cliente", 
+        "whatsapp": "Whatsapp do Cliente",
         "whatsappPlaceholder": "+551199123456",
         "email": "E-mail do Cliente",
         "emailPlaceholder": "cliente@exemplo.com",
@@ -73,7 +73,11 @@
     "profiles": {
       "main": "Perfis",
       "addNew": "Adicionar Novo"
-    }, 
+    },
     "settings": "Configurações"
+  },
+  "LocaleSwitcher": {
+    "en": "🇺🇸",
+    "pt": "🇧🇷"
   }
- }
+}

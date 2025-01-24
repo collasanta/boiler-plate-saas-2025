@@ -4,7 +4,7 @@
     "description": "This is our site, enjoy your stay!",
     "mainTitle": "Making health",
     "typewriter": {
-      "habit": "A habit", 
+      "habit": "A habit",
       "lifestyle": "A lifestyle",
       "routine": "A routine"
     },
@@ -40,7 +40,7 @@
     "subtitle": "Track your Clients",
     "register": "Register New Profile",
     "registration": {
-      "title": "Client Registration", 
+      "title": "Client Registration",
       "subtitle": "Register new clients",
       "form": {
         "fullName": "Full Name",
@@ -52,7 +52,7 @@
         "gender": "Gender",
         "genderPlaceholder": "Select gender",
         "male": "Male",
-        "female": "Female", 
+        "female": "Female",
         "age": "Age",
         "agePlaceholder": "25",
         "submit": "Register Client",
@@ -68,12 +68,16 @@
     "title": "Dashboard",
     "subtitle": "Track your applications"
   },
-    "Sidebar": {
-      "dashboard": "Dashboard",
-      "profiles": {
-        "main": "Profiles",
-        "addNew": "Add New"
-      },
-      "settings": "Settings"
-    }
- }
+  "Sidebar": {
+    "dashboard": "Dashboard",
+    "profiles": {
+      "main": "Profiles",
+      "addNew": "Add New"
+    },
+    "settings": "Settings"
+  },
+  "LocaleSwitcher": {
+    "en": "🇺🇸",
+    "pt": "🇧🇷"
+  }
+}
