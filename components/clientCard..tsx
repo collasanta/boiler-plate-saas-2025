@@ -52,7 +52,9 @@ const ClientCard: React.FC<ClientCardProps> = ({ client }) => {
           <div className="flex items-center gap-2">
             <UserIcon className="w-5 h-5 text-muted-foreground" />
             <span className="font-semibold text-muted-foreground">
-              {client?.name?.length! > 65 ? client?.name?.substring(0, 65) + "..." : client.name}
+              {client?.name && client.name.length > 65
+                ? client.name.substring(0, 65) + "..."
+                : client?.name || "Nome não informado"}
             </span>
           </div>
           <div className="flex space-x-2">

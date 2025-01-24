@@ -1,9 +1,4 @@
 const SettingsPage = async () => {
-  // const professionalInfos = await getProfessionalInfos();
-  // if (professionalInfos === null) {
-  //   return <div className="text-center">Erro ao carregar informações</div>;
-  // }
-
   const professionalInfos = {
     id: "user_2rkkmWBunGoUejrbYtMAvxVXHPH",
     name: "Teste inicial",

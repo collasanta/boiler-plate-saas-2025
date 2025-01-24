@@ -27,7 +27,7 @@ export const clientsFormSchema = z.object({
 export type ClientsFormSchemaType = z.infer<typeof clientsFormSchema>;
 
 // Use Prisma's generated type for Client
-export type ClientType = Prisma.ClientGetPayload<{}>;
+export type ClientType = Prisma.ClientGetPayload<object>;
 
 // ClientWithCurrentDiet now includes all Client fields plus the specified relations
 export type ClientWithCurrentDiet = Prisma.ClientGetPayload<{

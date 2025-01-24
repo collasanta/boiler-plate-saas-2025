@@ -5,10 +5,9 @@ import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useRouter } from "@/i18n/routing";
-import { updateAutomation } from "@/server-actions/automations";
 import { PlusIcon, SaveIcon } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import { toast } from "react-hot-toast";
+import toast from "react-hot-toast";
 
 interface DietPlan {
   id: string;
@@ -92,14 +91,14 @@ export default function DietAutomationEditForm({ initialAutomation, dietPlans }:
         return;
       }
 
-      const result = await updateAutomation(initialAutomation.id, {
-        name: automationName,
-        rule: JSON.stringify(rules),
-      });
+      // const result = await updateAutomation(initialAutomation.id, {
+      //   name: automationName,
+      //   rule: JSON.stringify(rules),
+      // });
 
-      if ("error" in result) {
-        throw new Error(result.error);
-      }
+      // if ("error" in result) {
+      //   throw new Error(result.error);
+      // }
 
       toast.success("Automação de dieta atualizada com sucesso!");
       router.push("/automations");

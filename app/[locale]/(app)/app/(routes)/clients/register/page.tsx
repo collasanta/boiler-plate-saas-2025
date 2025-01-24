@@ -14,18 +14,12 @@ import toast from "react-hot-toast";
 
 export default function ClientRegistration() {
   // next safe action pattern
-  const {
-    execute: executeSave,
-    isPending: isSaving,
-    // result: saveResult,
-    // reset: resetSaveAction,
-  } = useAction(createNewClient2, {
+  const { execute: executeSave, isPending: isSaving } = useAction(createNewClient2, {
     onSuccess({ data }) {
       toast.success(`Cliente cadastrado com sucesso. ID: ${data?.clientId}`);
       router.push(`/app/clients/${data?.clientId}`);
     },
     onError({ error }) {
-      console.log("Error in createNewClient2:", error);
       toast.error(`Erro ao cadastrar cliente ${error.serverError}`);
     },
   });
@@ -49,31 +43,6 @@ export default function ClientRegistration() {
     const formData = form.getValues();
     executeSave(formData);
   };
-
-  // const handleSubmit = async (e: React.FormEvent) => {
-  //   e.preventDefault();
-  //   const isValid = await form.trigger();
-  //   if (isValid) {
-  //     const data = form.getValues();
-  //     setIsLoading(true);
-
-  //     try {
-  //       const result = await createNewClient(data);
-  //       setIsLoading(false);
-  //       if ("error" in result) {
-  //         toast.error(`Erro ao cadastrar cliente: ${result.error}`);
-  //       } else {
-  //         toast.success(`Cliente cadastrado com sucesso. ID: ${result.clientId}`);
-  //         router.push(`/app/clients/${result.clientId}`);
-  //       }
-  //     } catch (error) {
-  //       setIsLoading(false);
-  //       toast.error("Erro ao cadastrar cliente. Tente novamente.");
-  //     }
-  //   } else {
-  //     toast.error(`Formulário inválido: ${JSON.stringify(form.formState.errors)}`);
-  //   }
-  // };
 
   return (
     <div className="px-4 md:px-20 lg:px-32 md:max-w-[800px] mx-auto">

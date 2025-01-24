@@ -1,13 +1,7 @@
 import DietAutomationRuns from "@/components/dietAutomationRuns";
 
 export default async function Dashboard() {
-  // const runsResult = await getAutomationRuns(params.automationId);
-
-  // if ("error" in runsResult) {
-  //   return <div>Error: {runsResult.error}</div>;
-  // }
-
-  // const { runs } = runsResult;
+  // Server action to retrieve runs goes here
   const runs = [
     {
       id: "do4mgrc3at88s",

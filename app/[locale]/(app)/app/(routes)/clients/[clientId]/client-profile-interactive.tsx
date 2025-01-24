@@ -1,75 +1,19 @@
 "use client";
 
-import React, { useState, useMemo, useEffect, useRef } from "react";
-import { toast } from "react-hot-toast";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import {
-  CalendarIcon,
-  MailIcon,
-  PhoneIcon,
-  UtensilsIcon,
-  PencilIcon,
-  PlusIcon,
-  LockIcon,
-  RefreshCwIcon,
-  SearchIcon,
-  InfoIcon,
-  FileBadge,
-} from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { updateClientDiet } from "@/server-actions/client";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Link } from "@/i18n/routing";
 import { ClientProfileInteractiveProps } from "@/types/diets";
-import EditableClientInfo from "@/components/block-editor-editable-client-info";
+import { CalendarIcon, FileBadge, InfoIcon, LockIcon, MailIcon, PencilIcon, PhoneIcon, RefreshCwIcon } from "lucide-react";
+import { useState } from "react";
 
-export default function ClientProfileInteractive({ initialClient, initialDietPlans }: ClientProfileInteractiveProps) {
+export default function ClientProfileInteractive({ initialClient }: ClientProfileInteractiveProps) {
   const [client, setClient] = useState(initialClient);
-  const [dietPlans] = useState(initialDietPlans);
+
   const [currentDiet, setCurrentDiet] = useState(initialClient.currentDietPlan);
   const [isChangingDiet, setIsChangingDiet] = useState(false);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
-
-  const filteredDietPlans = useMemo(() => {
-    if (!searchTerm) return dietPlans;
-    return dietPlans.filter((diet) => diet.name.toLowerCase().includes(searchTerm.toLowerCase()));
-  }, [dietPlans, searchTerm]);
-
-  const handleDietChange = async (dietId: string) => {
-    try {
-      const result = await updateClientDiet(client.id, dietId);
-      if (result.client?.currentDietPlan) {
-        setCurrentDiet(result.client?.currentDietPlan);
-      }
-      if ("error" in result) {
-        throw new Error(result.error);
-      }
-      setClient({ ...client, currentDietPlanId: dietId });
-      toast.success("Dieta atualizada com sucesso!");
-      setIsChangingDiet(false);
-      setSearchTerm("");
-      setIsDropdownOpen(false);
-    } catch (error) {
-      toast.error("Erro ao atualizar dieta: " + (error as Error).message);
-    }
-  };
-
-  useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-        setIsDropdownOpen(false);
-      }
-    }
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
 
   return (
     <div className="container mx-auto py-10">

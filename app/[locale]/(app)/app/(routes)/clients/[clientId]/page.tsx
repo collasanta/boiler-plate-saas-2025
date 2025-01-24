@@ -1,24 +1,26 @@
-import { getClient } from "@/server-actions/client";
-import { getDietPlansByProfessional } from "@/server-actions/diets";
 import ClientProfileInteractive from "./client-profile-interactive";
-import { GetClientResult } from "@/types/clients";
-import { GetDietPlansResult } from "@/types/diets";
 
 export default async function ClientProfilePage({ params }: { params: { clientId: string } }) {
   const { clientId } = params;
+  // SERVER ACTION GOES HERE TO FETCH CLIENT DATA
 
-  const clientPromise: Promise<GetClientResult> = getClient(clientId);
-  const dietPlansPromise: Promise<GetDietPlansResult> = getDietPlansByProfessional();
+  //MOCK
+  const clientResult = {
+    id: "gz3-wbemwh1ef",
+    name: "teste",
+    whatsapp: "+551148885859",
+    email: "afoaskisso@gmail.com",
+    info: "",
+    genre: "masculino",
+    age: 33,
+    currentDietPlanId: null,
+    currentWorkoutPlanId: null,
+    professionalId: "user_2rkkmWBunGoUejrbYtMAvxVXHPH",
+    createdAt: new Date(`2025-01-22T09:19:04.873Z`),
+    updatedAt: new Date("2025-01-22T09:19:04.873Z"),
+    dietPlans: [],
+    currentDietPlan: null,
+  };
 
-  const [clientResult, dietPlansResult] = await Promise.all([clientPromise, dietPlansPromise]);
-
-  if ("error" in clientResult) {
-    return <div>Erro ao carregar cliente: {clientResult.error}</div>;
-  }
-
-  if ("error" in dietPlansResult) {
-    return <div>Erro ao carregar dietas: {dietPlansResult.error}</div>;
-  }
-
-  return <ClientProfileInteractive initialClient={clientResult} initialDietPlans={dietPlansResult.dietPlans} />;
+  return <ClientProfileInteractive initialClient={clientResult} />;
 }

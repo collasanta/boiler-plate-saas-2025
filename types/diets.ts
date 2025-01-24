@@ -5,13 +5,12 @@ export type DietPlanWithClient = Prisma.DietPlanGetPayload<{
   include: { client: true };
 }>;
 
-export type GetDietPlansResult = 
+export type GetDietPlansResult =
   | { dietPlans: DietPlanWithClient[]; error?: undefined }
   | { error: string; dietPlans?: undefined };
 
 export type ClientProfileInteractiveProps = {
-    initialClient: ClientWithCurrentDiet; 
-    initialDietPlans: DietPlanWithClient[]; 
+  initialClient: ClientWithCurrentDiet;
 };
 
 export type DietFormSchemaType = {
@@ -22,4 +21,4 @@ export type DietFormSchemaType = {
   replaceCurrentDiet?: boolean;
 };
 
-export type DietPlanType = Prisma.DietPlanGetPayload<{}>;
+export type DietPlanType = Prisma.DietPlanGetPayload<object>;
