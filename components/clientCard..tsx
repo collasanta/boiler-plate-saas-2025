@@ -133,7 +133,6 @@ const ClientCard: React.FC<ClientCardProps> = ({ client }) => {
                 </AlertDialogAction>
               ) : (
                 <AlertDialogAction className="bg-red-600 hover:bg-red-800" onClick={() => deleteClient(client?.id || "")}>
-                  {/* <AlertDialogAction className="bg-red-600 hover:bg-red-800" onClick={() => handleDeleteClient(client?.id || "")}> */}
                   Deletar
                 </AlertDialogAction>
               )}
